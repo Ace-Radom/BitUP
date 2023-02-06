@@ -36,8 +36,8 @@ if(${BUILD_TEST})
 
     add_executable(test test.cpp)
     target_link_libraries(test
+        cvector
         filesystem
-        hash
     )
 
 endif()
