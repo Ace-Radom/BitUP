@@ -12,3 +12,6 @@ aux_source_directory(. C_FILESYSTEM_SRC)
 add_library(filesystem SHARED 
     ${C_FILESYSTEM_SRC}
 )
+target_link_libraries(filesystem
+    cvector
+)
