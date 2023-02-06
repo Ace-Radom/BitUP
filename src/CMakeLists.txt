@@ -1,3 +1,6 @@
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/cvector)
+# build cvector subproject
+
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/filesystem)
 # build filesystem subproject
 
