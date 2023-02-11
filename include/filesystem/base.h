@@ -12,7 +12,7 @@ extern "C" {
 #endif
 
 #define MAX_FILE_SIZE ULLONG_MAX
-#define MAX_PATH_LENGTH_BY_BITUP 32767
+#define MAX_PATH_LENGTH_BY_BITUP 0x7fff
 typedef char* PATH;
 
 #ifdef __cplusplus
