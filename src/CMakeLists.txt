@@ -7,6 +7,9 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/filesystem)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/renalog)
 # build renalog subproject
 
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/bitupignore)
+# build bitupignore subproject
+
 add_library(hash SHARED
     ${CMAKE_CURRENT_SOURCE_DIR}/hash.cpp
 )
