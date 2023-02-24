@@ -2,6 +2,7 @@
 #define _FILESYSTEM_TYPE_H_
 
 #include<sys/stat.h>
+#include<stdbool.h>
 
 #include"base.h"
 
