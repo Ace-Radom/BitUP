@@ -84,8 +84,8 @@ int main( int argc , char** argv ){
             }
         } // get the end pos of the str without tab chars
 
-        int str_WithoutTabChars_CopyPos;
-        int buf_CopyPos;
+        unsigned short int str_WithoutTabChars_CopyPos;
+        unsigned short int buf_CopyPos;
         for ( buf_CopyPos = NoTabChars_BeginPos , str_WithoutTabChars_CopyPos = 0 ; 
               buf_CopyPos <= NoTabChars_EndPos ; 
               buf_CopyPos++ , str_WithoutTabChars_CopyPos++ )
