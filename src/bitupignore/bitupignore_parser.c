@@ -46,6 +46,9 @@ int main( int argc , char** argv ){
 
     while ( fgets( buf , sizeof( buf ) , bitignore ) != NULL )
     {
+
+        #pragma region delete_TabChars
+
         int NoTabChars_BeginPos;
         int NoTabChars_EndPos;
         // this two int var contain the start and end pos of the str without tab chars
@@ -83,11 +86,16 @@ int main( int argc , char** argv ){
 
         int str_WithoutTabChars_CopyPos;
         int buf_CopyPos;
-        for ( buf_CopyPos = NoTabChars_BeginPos , str_WithoutTabChars_CopyPos = 0 ; buf_CopyPos <= NoTabChars_EndPos ; buf_CopyPos++ , str_WithoutTabChars_CopyPos++ )
+        for ( buf_CopyPos = NoTabChars_BeginPos , str_WithoutTabChars_CopyPos = 0 ; 
+              buf_CopyPos <= NoTabChars_EndPos ; 
+              buf_CopyPos++ , str_WithoutTabChars_CopyPos++ )
         {
             str_WithoutTabChars[str_WithoutTabChars_CopyPos] = buf[buf_CopyPos];
-        }
+        } // copy the str without tab chars from buf to new str var
         str_WithoutTabChars[buf_CopyPos] = '\0';
+        // here: end the new str with '\0', otherwise there will be an unexpected error
+
+        #pragma endregion delete_TabChars
 
         printf( "%s\n" , str_WithoutTabChars );
     }
