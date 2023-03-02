@@ -131,7 +131,15 @@ __cvector_api long long __cdecl cv_len( c_vector* __v ){
     return __v -> len;
 }
 
-// test functions
+// debug functions
+
+__cvector_api void __cdecl cv_print_int( c_vector* __v ){
+    for ( int i = 0 ; i < __v -> len ; i++ )
+    {
+        printf( "%d\n" , ( int ) __v -> items[i] );
+    }
+    return;
+}
 
 __cvector_api void __cdecl cv_print_str( c_vector* __v ){
     for ( int i = 0 ; i < __v -> len ; i++ )

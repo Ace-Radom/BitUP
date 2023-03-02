@@ -1,6 +1,11 @@
 cmake_minimum_required(VERSION 3.10)
-project(cvector VERSION 1.0)
+project(cvector VERSION 1.0.5)
 # subproject under main: BitUP
+
+# VERSION LIST:
+# * v1.0   - first version, achieve all basic function
+# * v1.0.5 - add two debug function: 'cv_print_int' and 'cv_print_str'
+#            they're used to output all objects in vectors
 
 add_definitions(-DEXPORTING_APIS)
 

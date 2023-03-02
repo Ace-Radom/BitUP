@@ -33,6 +33,7 @@ __cvector_api void* __cdecl cv_delete( c_vector* __v , long long __pos );
 __cvector_api void __cdecl cv_clean( c_vector* __v );
 __cvector_api long long __cdecl cv_len( c_vector* __v );
 
+__cvector_api void __cdecl cv_print_int( c_vector* __v );
 __cvector_api void __cdecl cv_print_str( c_vector* __v );
 
 #ifdef __cplusplus
