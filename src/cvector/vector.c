@@ -130,3 +130,13 @@ __cvector_api void __cdecl cv_clean( c_vector* __v ){
 __cvector_api long long __cdecl cv_len( c_vector* __v ){
     return __v -> len;
 }
+
+// test functions
+
+__cvector_api void __cdecl cv_print_str( c_vector* __v ){
+    for ( int i = 0 ; i < __v -> len ; i++ )
+    {
+        printf( "%s\n" , ( char* ) __v -> items[i] );
+    }
+    return;
+}
