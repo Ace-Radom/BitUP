@@ -112,7 +112,21 @@ int main( int argc , char** argv ){
 
     while ( fgets( buf_bitignoreReadIN , sizeof( buf_bitignoreReadIN ) , bitignore ) != NULL )
     {
-        cv_push_back( &bitignore_v , ( void* ) clean_TabChars( buf_bitignoreReadIN ) );
+        char* temp = ( char* ) malloc( strlen( buf_bitignoreReadIN ) );
+        strcpy( temp , clean_TabChars( buf_bitignoreReadIN ) );
+        // create one temp str, clean all tab-chars in the str read in and save it into this temp str
+        
+        if ( strcmp( temp , "file {" ) == 0   ||
+             strcmp( temp , "file{" ) == 0    ||
+             strcmp( temp , "folder {" ) == 0 ||
+             strcmp( temp , "folder{" ) == 0  ||
+             strcmp( temp , "}" ) == 0        ||
+             strcmp( temp , "" ) == 0            )
+        {
+            continue;
+        }
+
+        cv_push_back( &bitignore_v , ( void* ) temp );
     }
 
     printf( "%d\n" , cv_len( &bitignore_v ) );
@@ -120,6 +134,6 @@ int main( int argc , char** argv ){
 
     fclose( dirlist );
     fclose( bitignore );
-    
+
     return 0;
 } // main
