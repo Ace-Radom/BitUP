@@ -12,4 +12,5 @@ add_executable(bip
 
 target_link_libraries(bip
     filesystem
+    cvector
 )
