@@ -53,7 +53,7 @@ char* clean_TabChars( char* __str ){
     {
         str_WithoutTabChars[str_WithoutTabChars_CopyPos] = __str[__str_CopyPos];
     } // copy the str without tab chars from __str to new str var
-    str_WithoutTabChars[__str_CopyPos] = '\0';
+    str_WithoutTabChars[str_WithoutTabChars_CopyPos] = '\0';
     // here: end the new str with '\0', otherwise there will be an unexpected error
 
     return str_WithoutTabChars;
