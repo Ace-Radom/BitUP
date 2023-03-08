@@ -7,7 +7,7 @@
 #include"cvector/vector.h"
 
 #define __dirlist__ 1
-#define __bitignore__ 2
+#define __bitupignore__ 2
 
 char* clean_TabChars( char* __str ){
     int NoTabChars_BeginPos;
@@ -71,69 +71,101 @@ int main( int argc , char** argv ){
     }
 
     char dirlist_path[strlen( argv[__dirlist__] )];
-    char bitignore_path[strlen( argv[__bitignore__] )];
+    char bitupignore_path[strlen( argv[__bitupignore__] )];
     strcpy( dirlist_path , argv[__dirlist__] );
-    strcpy( bitignore_path , argv[__bitignore__] );
+    strcpy( bitupignore_path , argv[__bitupignore__] );
 
-    char* bitignore_dir = ( char* ) malloc( strlen( bitignore_path ) );
-    strcpy( bitignore_dir , get_parent_dir( bitignore_path ) );
-    // get .bitignore dir
+    char* bitupignore_dir = ( char* ) malloc( strlen( bitupignore_path ) );
+    strcpy( bitupignore_dir , get_parent_dir( bitupignore_path ) );
+    // get .bitupignore dir
 
     FILE* dirlist = NULL;
-    FILE* bitignore = NULL;
+    FILE* bitupignore = NULL;
 
     if ( ( dirlist = fopen( dirlist_path , "r+" ) ) == NULL )
     {
         printf( "[bip.exe] -> fatal: cannot open dirlist file (usually end with .bitupcache)\n" );
         return -1;
     } // open dirlist
-    if ( ( bitignore = fopen( bitignore_path , "r+" ) ) == NULL )
+    if ( ( bitupignore = fopen( bitupignore_path , "r+" ) ) == NULL )
     {
-        printf( "[bip.exe] -> fatal: cannot open bitignore file" );
+        printf( "[bip.exe] -> fatal: cannot open bitupignore file" );
         return -1;
-    } // open bitignore file
+    } // open bitupignore file
 
     c_vector dirlist_v;
-    c_vector bitignore_v;
+    c_vector bitupignore_file_v;
+    c_vector bitupignore_folder_v;
     cv_init( &dirlist_v , 10 );
-    cv_init( &bitignore_v , 10 );
+    cv_init( &bitupignore_file_v , 10 );
+    cv_init( &bitupignore_folder_v , 10 );
     // create and init vectors
 
     char buf_dirlistReadIN[MAX_PATH_LENGTH_BY_BITUP];
-    char buf_bitignoreReadIN[1024];
+    char buf_bitupignoreReadIN[1024];
 
     while ( fgets( buf_dirlistReadIN , sizeof( buf_dirlistReadIN ) , dirlist ) != NULL )
     {
         cv_push_back( &dirlist_v , ( void* ) clean_TabChars( buf_dirlistReadIN ) );
     }
 
-    printf( "%d\n" , cv_len( &dirlist_v ) );
-    cv_print_str( &dirlist_v );
+//  printf( "%d\n" , cv_len( &dirlist_v ) );
+//  cv_print_str( &dirlist_v );
 
-    while ( fgets( buf_bitignoreReadIN , sizeof( buf_bitignoreReadIN ) , bitignore ) != NULL )
+#define INPUT_FILE false
+#define INPUT_FOLDER true
+
+    bool input_type_now;
+
+    while ( fgets( buf_bitupignoreReadIN , sizeof( buf_bitupignoreReadIN ) , bitupignore ) != NULL )
     {
-        char* temp = ( char* ) malloc( strlen( buf_bitignoreReadIN ) );
-        strcpy( temp , clean_TabChars( buf_bitignoreReadIN ) );
+        char* temp = ( char* ) malloc( strlen( buf_bitupignoreReadIN ) );
+        strcpy( temp , clean_TabChars( buf_bitupignoreReadIN ) );
         // create one temp str, clean all tab-chars in the str read in and save it into this temp str
+
+        if ( strcmp( temp , "file {" ) == 0 ||
+             strcmp( temp , "file{" ) == 0     )
+        {
+            input_type_now = INPUT_FILE;
+            continue;
+        } // inputing file ignore tag
+
+        if ( strcmp( temp , "folder {" ) == 0 ||
+             strcmp( temp , "folder{" ) == 0     )
+        {
+            input_type_now = INPUT_FOLDER;
+            continue;
+        } // inputing folder ignore tag
         
-        if ( strcmp( temp , "file {" ) == 0   ||
-             strcmp( temp , "file{" ) == 0    ||
-             strcmp( temp , "folder {" ) == 0 ||
-             strcmp( temp , "folder{" ) == 0  ||
-             strcmp( temp , "}" ) == 0        ||
-             strcmp( temp , "" ) == 0            )
+        if ( strcmp( temp , "}" ) == 0  ||
+             strcmp( temp , "" ) == 0   ||
+             strcmp( temp , "\0" ) == 0    )
         {
             continue;
         }
 
-        cv_push_back( &bitignore_v , ( void* ) temp );
+        if ( input_type_now == INPUT_FILE )
+        {
+            cv_push_back( &bitupignore_file_v , ( void* ) temp );
+        } // push to file vector
+
+        if ( input_type_now == INPUT_FOLDER )
+        {
+            cv_push_back( &bitupignore_folder_v , ( void* ) temp );
+        } // push to folder vector
+        
     }
 
-    printf( "%d\n" , cv_len( &bitignore_v ) );
-    cv_print_str( &bitignore_v );
+#undef INPUT_FILE
+#undef INPUT_FOLDER
+
+    cv_push_back( &bitupignore_folder_v , ( void* ) ".BitUP" );
+
+    cv_print_str( &bitupignore_file_v );
+    cv_print_str( &bitupignore_folder_v );
 
     fclose( dirlist );
-    fclose( bitignore );
+    fclose( bitupignore );
 
     return 0;
 } // main
