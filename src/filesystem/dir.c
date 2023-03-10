@@ -110,7 +110,8 @@ __c_filesystem_api PATH __cdecl get_parent_dir( const PATH __path ){
             break;    
         }
     }
-    char pardir[pos] = {0};
+    char pardir[pos];
+    memset( pardir , '\0' , sizeof( pardir ) );
     strncpy( pardir , __path , pos + 1 );
     if ( !is_root_dir( pardir ) )
     {
@@ -127,7 +128,8 @@ __c_filesystem_api PATH __cdecl get_relative_path( const PATH __absolute_path , 
         return NULL;
     } // absolute path is same as the given root dir, return NULL
 
-    char path_temp[strlen(__absolute_path)] = { 0 };
+    char path_temp[strlen(__absolute_path)];
+    memset( path_temp , '\0' , sizeof( path_temp ) );
     // use to check if the given absolute path is a child path of the given root dir
     strncpy( path_temp , __absolute_path , strlen( __root_dir ) );
     if ( strcmp( path_temp , __root_dir ) != 0 )
